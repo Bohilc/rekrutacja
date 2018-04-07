@@ -13,24 +13,19 @@
         <!-- custom style -->
         <link href="{{ url('css/custom.css') }}" rel="stylesheet">
         <!-- angularjs -->
-        <!-- <script src="{{ url('js/angularjs/angular.min.js') }}"></script> -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="{{ url('js/angularjs/angular.min.js') }}"></script>
         <script src="{{ url('js/angularjs/controllers/mainController.js') }}"></script>
         <!-- icons -->
-        <!-- <script src="{{ url('js/feather.min.js') }}"></script> -->
-        <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+        <script src="{{ url('js/feather.min.js') }}"></script>
         <!-- jQuery -->
         <script src="{{ url('js/jquery.min.js') }}"></script>
         <!-- chartist.js -->
-        <!-- <link rel="stylesheet" href="{{ url('css/chartist.min.css') }}"> -->
-        <link rel="stylesheet" href="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-        <script src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-        <!-- <script src="{{ url('js/chartist.min.js') }}"></script> -->
-    </head>
+        <link rel="stylesheet" href="{{ url('css/chartist.min.css') }}">
+        <script src="{{ url('js/chartist.min.js') }}"></script>
     
     <body ng-app="app" ng-cloak>
    
-        <div ng-controller="appCtrl" class="content">
+        <div ng-controller="appCtrl" ng-init="FunCall()" class="content ">
             <div class="content__page">
                 <div class="grid content__page__weather__container" style="width: 90%">
                     <!-- 1 section -->
@@ -52,8 +47,6 @@
                             </div>
                         </div>
                         <br>
-                        
-                        
                         <!-- weather icon -->
                         <img ng-if="dateString == todayDate" class="weather__img" src="http://openweathermap.org/img/w/{$ currentWeather[0].weather[0].icon $}.png"  alt="">
                         <img ng-if="dateString !== todayDate && currentWeather[4] !== undefined" class="weather__img" src="http://openweathermap.org/img/w/{$ currentWeather[4].weather[0].icon $}.png"  alt="">
@@ -72,14 +65,15 @@
                             <div class="content__page__weather__container--box">
                                     <h2 class="title title--white">
                                         <b >~ {$ time $}</b> 
-                                        <!-- <b ng-if="dateString !== todayDate">{$ currentWeather[4].dt_txt $}</b>  -->
+                                        <i data-feather="clock" class="icon--cyan--1"></i> 
                                     </h2>
                                 </div>
                                 <div class="content__page__weather__container--box">
-                                <h2 ng-if="dateString == todayDate" class="title title--white">
-                                    Teraz: <b>{$ (currentWeather[0].main.temp).toFixed() $}<span class="icon--cyan">°C</span> </b> 
-                                </h2>
-
+                                    <!-- if today -->
+                                    <h2 ng-if="dateString == todayDate" class="title title--white">
+                                        Teraz: <b>{$ (currentWeather[0].main.temp).toFixed() $}<span class="icon--cyan">°C</span> </b> 
+                                    </h2>
+                                    <!-- if another day -->
                                     <h2 ng-if="dateString !== todayDate" class="title title--white">
                                         <span ng-if="currentWeather[4]">Po południu: <b>{$ (currentWeather[4].main.temp).toFixed() $}<span class="icon--cyan">°C</span></b></span>
                                         <span ng-if="!currentWeather[4]">Rano: <b>{$ (currentWeather[currentWeather.length-1].main.temp).toFixed() $}<span class="icon--cyan">°C</span></b></span>
@@ -88,10 +82,11 @@
                             
                             <div class="content__page__weather__container--box">
                                 <h2 class="title title--white">
-                                Wilgotność: 
+                                    Wilgotność: 
+                                     <!-- if today -->
                                     <b ng-if="dateString == todayDate && currentWeather[4] == undefined">{$ currentWeather[0].main.humidity $} <span class="icon--cyan">%</span></b> 
                                     <b ng-if="dateString == todayDate && currentWeather[4] !== undefined">{$ currentWeather[0].main.humidity $} <span class="icon--cyan">%</span></b> 
-
+                                    <!-- if another day -->
                                     <b ng-if="dateString !== todayDate && currentWeather[4] !== undefined">{$ currentWeather[4].main.humidity $} <span class="icon--cyan">%</span></b> 
                                     <b ng-if="dateString !== todayDate && currentWeather[4] == undefined">{$ currentWeather[currentWeather.length-1].main.humidity $} <span class="icon--cyan">%</span></b> 
                                     <i data-feather="droplet" class="icon--cyan--1"></i>
@@ -104,21 +99,22 @@
                             <div class="content__page__weather__container--box">
                                 <h2 class="title title--white">
                                         Pochmurność: 
-                                            <b ng-if="dateString == todayDate && currentWeather[4] == undefined">{$ currentWeather[0].clouds.all $}<span class="icon--cyan">%</span></b> 
-                                            <b ng-if="dateString == todayDate && currentWeather[4] !== undefined">{$ currentWeather[0].clouds.all $}<span class="icon--cyan">%</span></b>
-
-                                            <b ng-if="dateString !== todayDate && currentWeather[4] !== undefined">{$ currentWeather[4].clouds.all $}<span class="icon--cyan">%</span></b>
-                                            <b ng-if="dateString !== todayDate && currentWeather[4] == undefined">{$ currentWeather[currentWeather.length-1].clouds.all $}<span class="icon--cyan">%</span></b>
-                                            <i data-feather="cloud" class="icon--cyan--1"></i>
-                                    
+                                         <!-- if today -->
+                                        <b ng-if="dateString == todayDate && currentWeather[4] == undefined">{$ currentWeather[0].clouds.all $}<span class="icon--cyan">%</span></b> 
+                                        <b ng-if="dateString == todayDate && currentWeather[4] !== undefined">{$ currentWeather[0].clouds.all $}<span class="icon--cyan">%</span></b>
+                                        <!-- if another day -->
+                                        <b ng-if="dateString !== todayDate && currentWeather[4] !== undefined">{$ currentWeather[4].clouds.all $}<span class="icon--cyan">%</span></b>
+                                        <b ng-if="dateString !== todayDate && currentWeather[4] == undefined">{$ currentWeather[currentWeather.length-1].clouds.all $}<span class="icon--cyan">%</span></b>
+                                        <i data-feather="cloud" class="icon--cyan--1"></i>
                                     </h2>
                             </div>
                             <div class="content__page__weather__container--box">
                                 <h2 class="title title--white">
                                     Wiatr: 
+                                     <!-- if today -->
                                     <b class="title--white" ng-if="dateString == todayDate && currentWeather[4] == undefined">{$ currentWeather[0].wind.speed $} <span class="icon--cyan">m/s</span></b>
                                     <b class="title--white" ng-if="dateString == todayDate && currentWeather[4] !== undefined">{$ currentWeather[0].wind.speed $} <span class="icon--cyan">m/s</span></b>
-
+                                    <!-- if another day -->
                                     <b class="title--white" ng-if="dateString !== todayDate && currentWeather[4] !== undefined">{$ currentWeather[4].wind.speed $} <span class="icon--cyan">m/s</span></b>
                                     <b class="title--white" ng-if="dateString !== todayDate && currentWeather[4] == undefined">{$ currentWeather[currentWeather.length-1].wind.speed $} <span class="icon--cyan">m/s</span></b>
                                 </h2>
@@ -127,34 +123,33 @@
                             <div class="content__page__weather__container--box">
                                 <h2 class="title title--white">
                                     Ciśnienie : 
+                                     <!-- if today -->
                                     <b ng-if="dateString == todayDate && currentWeather[4] == undefined">{$ currentWeather[0].main.pressure $} <span class="icon--cyan">hPa</span></b> 
                                     <b ng-if="dateString == todayDate && currentWeather[4] !== undefined">{$ currentWeather[0].main.pressure $} <span class="icon--cyan">hPa</span></b> 
-
+                                    <!-- if another day -->
                                     <b ng-if="dateString !== todayDate && currentWeather[4] !== undefined">{$ currentWeather[4].main.pressure $} <span class="icon--cyan">hPa</span></b> 
                                     <b ng-if="dateString !== todayDate && currentWeather[4] == undefined">{$ currentWeather[currentWeather.length-1].main.pressure $} <span class="icon--cyan">hPa</span></b> 
                                 </h2>
                             </div>
                         </div>
-                        
                     </div>
-                    
                 </div>
                 <!-- chart -->
                 <div class="content__page__weather--chart">
                     <div class="ct-chart content__page__weather__container"></div>
                 </div>
             </div>
-
         </div>
+        <!-- style for chart -->
         <style>
+            
             .ct-chart .ct-line,
             .ct-chart .ct-point {
                 stroke: white;
-                /* stroke-width: 4px; */
-                
                 color: white;
-
+                /* stroke-width: 4px; */
             }
+
             .ct-series-a .ct-area {
                 fill: #00FFFF;
             }
@@ -181,6 +176,8 @@
                 stroke: white;
             }
         </style>
+
+        <!-- run icon feather -->
         <script>
             feather.replace(); 
         </script>

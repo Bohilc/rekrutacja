@@ -23,7 +23,7 @@ Uruchomić XAMPP:
 
 Następnie uruchomić Apache i MySQL
 
-Prześć w przeglądarcie do:
+W przeglądarce wpisać:
 
 ```sh
  localhost/rekrutacja/public/

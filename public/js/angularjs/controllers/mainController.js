@@ -171,7 +171,6 @@
                 ]
               };
 
-              /* Set some base options (settings will override the default settings in Chartist.js *see default settings*). We are adding a basic label interpolation function for the xAxis labels. */
               var options = {
                 
                 stretch: true,
